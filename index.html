@@ -55,7 +55,7 @@
                                             <div class="d-flex">
                                                 <div>
                                                     <div> ID</div>
-                                                    <div class="font-weight-bold mt-1">1</div>
+                                                    <div class="font-weight-bold mt-1">0</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -72,7 +72,7 @@
                                             <div class="font-weight-bold  mt-1">Senior </div>
                                         </td>
                                         <td>
-                                            Deporte:
+                                            Seccion:
                                             <div class="font-weight-bold  mt-1">Kayak Polo</div>
                                         </td>
 
@@ -127,13 +127,15 @@
 
 
             <!--Añadir Prueba-->
-            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card" hidden>
+            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Añadir Prueba</h4>
                         <div class="form-group">
-                            <input id="nombreNuevoUsuario" type="text" class="form-control form-control-sm"
-                                placeholder="Nombre de prueba:">
+                            <label for="exampleFormControlSelect2">Selecciona la prueba a añadir:</label>
+                            <select class="form-control" id="selectPrueba">
+                                
+                            </select>
                         </div>
 
                         <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-success"
@@ -143,7 +145,7 @@
             </div>
 
             <!--Añadir Marca-->
-            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card">
+            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card" hidden>
                 <div class="card">
                     <div class="card-body">
                         <h4>Añadir Marca:</h4>
@@ -193,7 +195,7 @@
         </div>
 
 
-        <!--MOSTRAR KAYAK USUARIO-->
+        <!--MOSTRAR USUARIO-->
         <div class="row pt-4">
             <div class="col">
                 <div class="card">
