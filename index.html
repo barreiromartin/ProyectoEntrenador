@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto Entrenador</title>
+
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/25649eac4e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="container pt-5">
+        <!-- TITULO DE LA PÁGINA -->
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0 font-weight-bold">Proyecto Entrenador</h3>
+                <p>Martín Barreiro 1º DAW</p>
+            </div>
+            <div class="col-sm-6">
+                <div class="d-flex align-items-center justify-content-md-end">
+                    <div class="pr-1 mb-3 mr-2 mb-xl-0">
+                        <button id="botonAñadirUsuario" type="button" class="btn btn-sm btn-secondary">Añadir
+                            Usuario</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--TABLA DEPORTISTAS + AÑADIR USUARIOS-->
+        <div class="row p-2">
+            <!--Tabala Listado-->
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <h4 class="card-title mb-3">Deportistas</h4>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody id="listaDeportistas">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div>
+                                                    <div> ID</div>
+                                                    <div class="font-weight-bold mt-1">1</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div>
+                                                    <div> Nombre:</div>
+                                                    <div class="font-weight-bold mt-1">Martín Barreiro</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            Categoria:
+                                            <div class="font-weight-bold  mt-1">Senior </div>
+                                        </td>
+                                        <td>
+                                            Deporte:
+                                            <div class="font-weight-bold  mt-1">Kayak Polo</div>
+                                        </td>
+
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-secondary">Detalles</button>
+                                            <button type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+
+                                    </tr>
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Añadir Usuario-->
+            <div id="formAñadirUsuario" class="col-md-5 grid-margin stretch-card" hidden>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Añadir Deportista</h4>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input id="nombreNuevoUsuario" type="text" class="form-control form-control-sm"
+                                placeholder="Nombre del Deportista">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Sección</label>
+                            <select class="form-control form-control-lg" id="seccionNuevoUsuario">
+                                <option>Kayak</option>
+                                <option>Canoa</option>
+                                <option>Kayak Polo</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Categoria</label>
+                            <select class="form-control" id="categoriaNuevoUsuario">
+                                <option>Senior</option>
+                                <option>Sub21</option>
+                                <option>Sub18</option>
+                            </select>
+                        </div>
+
+                        <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-success"
+                            data-bs-toggle="modal" href="#modalActualizar">Añadir</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Añadir Prueba-->
+            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card" hidden>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Añadir Prueba</h4>
+                        <div class="form-group">
+                            <input id="nombreNuevoUsuario" type="text" class="form-control form-control-sm"
+                                placeholder="Nombre de prueba:">
+                        </div>
+
+                        <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-success"
+                            data-bs-toggle="modal" href="#modalActualizar">Añadir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Añadir Marca-->
+            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Añadir Marca:</h4>
+                        <div class="form-group">
+                            
+                            <input id="nombreNuevoUsuario" type="text" class="form-control form-control-sm"
+                                placeholder="Escribe la marca manualmente:">
+                        </div>
+                        <hr>
+                        <h4>Cronómetro:</h4>
+                        <div class="form-group">
+                            <p>00:00:00</p>
+                            <div class="btn-group me-2" role="group" aria-label="Second group">
+                                <button type="button" class="btn btn-light btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-play-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-pause-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                        <path
+                                            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-success"
+                            data-bs-toggle="modal" href="#modalActualizar">Añadir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--MOSTRAR KAYAK USUARIO-->
+        <div class="row pt-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <h4 class="card-title mb-3"><a class="text-decoration-none" data-bs-toggle="collapse"
+                                    href="#marcasKayak" role="button" aria-expanded="false"
+                                    aria-controls="marcasKayak">Martín Barreiro</a></h4>
+                        </div>
+
+                        <div class="table-responsive collapse" id="marcasKayak">
+                            <div class="pb-3">
+                                <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-secondary"
+                                    data-bs-toggle="modal" href="#modalActualizar">Añadir Prueba</button>
+                            </div>
+
+
+                            <table class="table">
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <div class="font-weight-bold mt-1">1</div>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div>Prueba:
+                                            </div>
+                                            <div class="font-weight-bold  mt-1">1000m</div>
+                                        </td>
+
+
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+
+
+                                        <!--MARCAS-->
+                                        <td>
+                                            <table class="table">
+                                                <h4 class="pb-2">Marcas:</h4>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div>Fecha:</div>
+                                                            <div class="font-weight-bold  mt-1">25/05/2022 - 16:43</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>Marca:</div>
+                                                            <div class="font-weight-bold  mt-1">5:22</div>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-danger">Eliminar</button>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div>Fecha:</div>
+                                                            <div class="font-weight-bold  mt-1">25/05/2022 - 17:03</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>Marca:</div>
+                                                            <div class="font-weight-bold  mt-1">5:16</div>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-danger">Eliminar</button>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="modal fade" id="modalActualizar" aria-hidden="true" aria-labelledby="modalActualizar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="font-weight-bold">Proyecto Entrenador</h3>
+                        <p>Martín Barreiro 1º DAW</p>
+                </div>
+                <div class="modal-body p-4">
+                    Usuario añadido con éxito a la base de datos.
+                </div>
+                <div class="modal-footer">
+                    <button id="botonActualizar" class="btn btn-secondary btn-sm">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+<footer>
+    <script src="main.js"></script>
+</footer>
+
+</html>
