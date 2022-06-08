@@ -18,6 +18,7 @@
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="inc/clases.js"></script>
     <script src="funciones/cronometro.js"></script>
+    <script src="funciones/fecha.js"></script>
 
 </head>
 
@@ -107,7 +108,7 @@
                             </select>
                         </div>
                         <!--MODAL INSERTAR PRUEBA-->
-                        <button id="botonInsertarPrueba" type="button" class="btn btn-sm btn-success"
+                        <button id="botonInsertPrueba" type="button" class="btn btn-sm btn-success"
                             data-bs-toggle="modal" href="#modalInsertarPrueba">Añadir</button>
                     </div>
                 </div>
@@ -119,12 +120,17 @@
                     <div class="card-body">
                         <h4 class="card-title">Añadir Marca:</h4>
                         <div class="form-group">
-
-                            <input id="nombreNuevoUsuario" type="text" class="form-control form-control-sm"
+                            <label>Marca manual:</label>
+                            <input id="marcaManual" type="text" class="form-control form-control-sm"
                                 placeholder="Escribe la marca manualmente:">
+                            <button id="botonInsertMarcaManual" type="button" class="btn btn-sm btn-success mt-4"
+                                data-bs-toggle="modal" href="#modalInsertarMarca">Añadir
+                            </button>
                         </div>
                         <hr>
-                        <h4>Cronómetro:</h4>
+                        <!--MODAL INSERTAR MARCA-->
+
+                        <label>Cronómetro:</label>
                         <div class="form-group">
                             <p id="text_cronometro">00:00:00</p>
                             <div class="btn-group me-2" role="group" aria-label="Second group">
@@ -155,7 +161,7 @@
 
                         </div>
                         <!--MODAL INSERTAR MARCA-->
-                        <button id="botonInsertarMarca" type="button" class="btn btn-sm btn-success"
+                        <button id="botonInsertMarcaCrono" type="button" class="btn btn-sm btn-success"
                             data-bs-toggle="modal" href="#modalInsertarMarca">Añadir
                         </button>
                     </div>
@@ -216,7 +222,8 @@
         </div>
     </div>
 
-    <div class="modal fade botonF5" id="modalInsertarPrueba" aria-hidden="true" aria-labelledby="modalActualizar" tabindex="-1">
+    <div class="modal fade botonF5" id="modalInsertarPrueba" aria-hidden="true" aria-labelledby="modalActualizar"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -232,8 +239,9 @@
             </div>
         </div>
     </div>
-    
-    <div class="modal fade botonF5" id="modalInsertarMarca" aria-hidden="true" aria-labelledby="modalActualizar" tabindex="-1">
+
+    <div class="modal fade botonF5" id="modalInsertarMarca" aria-hidden="true" aria-labelledby="modalActualizar"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

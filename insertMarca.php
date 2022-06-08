@@ -1,10 +1,11 @@
 <?php
 include('inc/bbdd.php');
 
-$idUser = $_GET["idUser"];
-$idPrueba = $_GET["idPrueba"];
+$prueba_user = $_GET["prueba_user"];
+$fecha = $_GET["fecha"];
+$marca = $_GET["marca"];
 
-$consulta = "INSERT INTO prueba_deportista(preuba_user, idPrueba, idUser) VALUES (NULL, '$idUser', '$idPrueba');";
+$consulta = "INSERT INTO marcas(prueba_user, fecha, marca) VALUES ('$prueba_user', '$fecha', '$marca');";
 
 
 if ($conexion->query($consulta) == TRUE) {

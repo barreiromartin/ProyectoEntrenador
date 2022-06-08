@@ -58,3 +58,36 @@ class marca
         $this->marca = $marca;
     }
 }
+
+class prueba_user
+{
+    public $prueba_user;
+    public $idPrueba;
+    public $idUser;
+
+    function __construct($prueba_user, $idPrueba, $idUser)
+    {
+        $this->idPrueba = $idPrueba;
+        $this->idUser = $idUser;
+        $this->prueba_user = $prueba_user;
+        
+    }
+}
+
+class pruebas_por_user
+{
+    public $prueba_user;
+    public $idUser;
+    public $idPrueba;
+    PUBLIC $nomrePrueba;
+    
+
+    function __construct($prueba_user, $idUser, $idPrueba, $nombrePrueba)
+    {
+        $this->idPrueba = $idPrueba;
+        $this->idUser = $idUser;
+        $this->prueba_user = $prueba_user;
+        $this->nombrePrueba = $nombrePrueba;
+        
+    }
+}

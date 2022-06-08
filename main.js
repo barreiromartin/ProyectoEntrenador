@@ -1,8 +1,3 @@
-
-
-
-
-
 function seleccionPruebas() {
     $.ajax({
         data: { "nombre_tabla": "pruebas" },
@@ -129,8 +124,6 @@ function tablaDeportistas() {
     })
 }
 
-
-
 function botonActualizar() {
     boton = document.getElementsByClassName("botonF5");
     for (let i = 0; i < boton.length; i++) {
@@ -142,7 +135,6 @@ function botonActualizar() {
     }
 
 }
-
 
 function botonDetalles() {
     var botones = document.getElementsByClassName("botonDetalles");
@@ -176,20 +168,17 @@ function tarjetaDeportista(idUser) {
     })
 }
 
+
 function tablaPruebas(idUser) {
     $.ajax({
         async: false,
         data: { "idUser": idUser },
-        url: 'selectPruebasUsuario.php',
+        url: 'selectAllPruebasUsuario.php',
         type: 'get',
         success: function (response) {
             if (response != false) {
                 var respuesta = JSON.parse(response);
-
-                for (i = 0; i < respuesta.length; i++) {
-
-
-
+                for (var i = 0; i < respuesta.length; i++) {
                     tr = document.createElement("tr");
 
                     //Prueba
@@ -208,29 +197,27 @@ function tablaPruebas(idUser) {
                     tr.appendChild(tdPrueba);
 
 
-                    //AñadirMarca
+                    //Boton AñadirMarca
                     tdAñadirMarca = document.createElement("td");
                     btnAñadirMarca = document.createElement("button");
-                    btnAñadirMarca.setAttribute("id", "botonAñadirMarca");
+                    btnAñadirMarca.classList.add("botonAñadirMarca");
                     btnAñadirMarca.innerHTML = "Añadir Marca";
                     btnAñadirMarca.classList.add("btn");
                     btnAñadirMarca.classList.add("btn-sm");
                     btnAñadirMarca.classList.add("btn-secondary");
-                    btnAñadirMarca.value = respuesta[i].idPrueba;
-
+                    btnAñadirMarca.value = respuesta[i].prueba_user;
                     tdAñadirMarca.appendChild(btnAñadirMarca);
                     tr.appendChild(tdAñadirMarca);
 
 
-                    //Eliminar
+                    //BotonEliminar
                     tdEliminar = document.createElement("td");
                     btnEliminar = document.createElement("button");
                     btnEliminar.innerHTML = "Eliminar";
                     btnEliminar.classList.add("btn");
                     btnEliminar.classList.add("btn-sm");
                     btnEliminar.classList.add("btn-danger");
-                    btnEliminar.value = respuesta[i].idPrueba;
-
+                    btnEliminar.value = respuesta[i].prueba_user;
                     tdEliminar.appendChild(btnEliminar);
                     tr.appendChild(tdEliminar);
 
@@ -238,7 +225,8 @@ function tablaPruebas(idUser) {
                     tdMarcas = document.createElement("td");
                     tableMarcas = document.createElement("table");
                     tableMarcas.classList.add("table");
-                    tableMarcas.setAttribute("id", "tableMarcas");
+                    nombreTabla = "tableMarcas" + respuesta[i].prueba_user;
+                    tableMarcas.setAttribute("id", nombreTabla);
                     tituloMarcas = document.createElement("h4");
                     tituloMarcas.classList.add("pb-2");
                     tituloMarcas.innerHTML = "Marcas:"
@@ -254,8 +242,7 @@ function tablaPruebas(idUser) {
                     //Añadir el tr a la tabla
                     document.getElementById("listaPruebas").appendChild(tr);
 
-                    tablaMarcas(idUser, respuesta[i].idPrueba);
-                    insertPrueba();
+                    tablaMarcas(respuesta[i].idUser, respuesta[i].idPrueba);
                     botonFormMarcas();
 
                 }
@@ -300,7 +287,8 @@ function tablaMarcas(idUser, idPrueba) {
                     tdMarca.appendChild(tdMarcaDiv);
                     tdMarca.appendChild(tdMarcaDatos);
                     tr.appendChild(tdMarca);
-                    document.getElementById("tableMarcas").appendChild(tr);
+                    nombreTabla = "tableMarcas" + marcaPrueba[i].prueba_user;
+                    document.getElementById(nombreTabla).appendChild(tr);
                 }
             }
         }
@@ -332,14 +320,24 @@ function botonesForms() {
 function botonFormMarcas() {
     forms = document.getElementsByClassName("formHidden");
 
-    botonAñadirMarca = document.getElementById("botonAñadirMarca");
+    botonAñadirMarca = document.getElementsByClassName("botonAñadirMarca");
+    for (i = 0; i < botonAñadirMarca.length; i++) {
+        botonAñadirMarca[i].addEventListener("click", (event) => {
 
-    botonAñadirMarca.addEventListener("click", () => {
-        for (i = 0; i < forms.length; i++) {
-            forms[i].hidden = true;
-        }
-        document.getElementById("formAñadirMarca").hidden = false;
-    })
+            prueba_user = event.currentTarget.value;
+            document.getElementById("botonInsertMarcaManual").value = prueba_user;
+            document.getElementById("botonInsertMarcaCrono").value = prueba_user;
+
+            //OCULTAR OTROS FORMULARIOS Y MOSTRAR EL SELECCIONADO.
+            for (i = 0; i < forms.length; i++) {
+                forms[i].hidden = true;
+            }
+            document.getElementById("formAñadirMarca").hidden = false;
+
+
+        })
+    }
+
 }
 
 function insertDeportista() {
@@ -358,23 +356,20 @@ function insertDeportista() {
 }
 
 function insertPrueba() {
-    boton = document.getElementById("botonInsertarPrueba");
-
-
-
-
-
+    boton = document.getElementById("botonInsertPrueba");
     boton.addEventListener("click", () => {
         //Usuario
-        idUser = document.getElementById("botonAñadirPrueba").value;
+        var idUser = document.getElementById("botonAñadirPrueba").value;
 
         //Prueba
         seleccion = document.getElementById("selectPrueba");
-        idPrueba = seleccion.value;
+        var idPrueba = seleccion.value;
+
+        console.log(idUser, idPrueba);
 
 
         $.ajax({
-            data: { "idUser": idUser, "idPrueba": idPrueba },
+            data: { "idPrueba": idPrueba, "idUser": idUser },
             url: 'insertPrueba.php',
             type: 'get',
         })
@@ -382,36 +377,36 @@ function insertPrueba() {
 }
 
 function insertMarca() {
-    boton = document.getElementById("botonInsertarMarca");
+    botonManual = document.getElementById("botonInsertMarcaManual");
 
 
-
-
-
-    boton.addEventListener("click", () => {
+    botonManual.addEventListener("click", (evt) => {
         //Usuario
-        idUser = document.getElementById("botonAñadirMarca").value;
-
-        //Prueba
-        seleccion = document.getElementById("selectPrueba");
-        idPrueba = seleccion.value;
-
-
+        marcaManual = document.getElementById("marcaManual").value;
+        fecha = fechaActual();
         $.ajax({
-            data: { "idUser": idUser, "idPrueba": idPrueba },
+            data: { "prueba_user": evt.currentTarget.value, "marca": marcaManual, "fecha": fecha },
+            url: 'insertMarca.php',
+            type: 'get',
+        })
+    })
+
+    botonCrono = document.getElementById("botonInsertMarcaCrono");
+
+    botonCrono.addEventListener("click", (evt) => {
+        //Usuario
+        marcaCrono = document.getElementById("text_cronometro").innerHTML;
+        fecha = fechaActual();
+        $.ajax({
+            data: { "prueba_user": evt.currentTarget.value, "marca": marcaCrono, "fecha": fecha },
             url: 'insertMarca.php',
             type: 'get',
         })
     })
 }
 
-
-
-
 function __main__() {
-
-
-
+    fechaActual();
 
     botonActualizar();
 
@@ -428,12 +423,12 @@ function __main__() {
     //BOTON DE DETALLES
     botonDetalles();
 
-    //botonAñadirPrueba();
-
     //AÑADIR DEPORTISTA
     insertDeportista();
 
+    insertPrueba();
 
+    insertMarca();
 
 
 
