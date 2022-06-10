@@ -5,11 +5,11 @@ $nombre = $_GET["nombre"];
 $categoria = $_GET["categoria"];
 $seccion = $_GET["seccion"];
 
-$consulta = "INSERT INTO deportistas(idUser, nombreUser, categoria, seccion) VALUES (NULL, '$nombre', '$categoria', '$seccion');";
+$consulta = "INSERT INTO deportistas(nombreUser, categoria, seccion) VALUES ('$nombre', '$categoria', '$seccion');";
 
 
 if ($conexion->query($consulta) == TRUE) {
-   return true;
+   return "Usuario añadido con exito";
 } else {
     return false;
 }   

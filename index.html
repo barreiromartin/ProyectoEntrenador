@@ -16,6 +16,9 @@
     <script src="https://kit.fontawesome.com/25649eac4e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="inc/clases.js"></script>
+    <script src="funciones/cronometro.js"></script>
+    <script src="funciones/fecha.js"></script>
 
 </head>
 
@@ -38,9 +41,9 @@
         </div>
 
         <!--TABLA DEPORTISTAS + AÑADIR USUARIOS-->
-        <div class="row p-2">
+        <div class="row pb-4">
             <!--Tabala Listado-->
-            <div class="col-7">
+            <div class="col-8">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-wrap justify-content-between">
@@ -50,39 +53,7 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody id="listaDeportistas">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div>
-                                                    <div> ID</div>
-                                                    <div class="font-weight-bold mt-1">0</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div>
-                                                    <div> Nombre:</div>
-                                                    <div class="font-weight-bold mt-1">Martín Barreiro</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Categoria:
-                                            <div class="font-weight-bold  mt-1">Senior </div>
-                                        </td>
-                                        <td>
-                                            Seccion:
-                                            <div class="font-weight-bold  mt-1">Kayak Polo</div>
-                                        </td>
 
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-secondary">Detalles</button>
-                                            <button type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-
-                                    </tr>
-                               
                                 </tbody>
                             </table>
                         </div>
@@ -91,7 +62,7 @@
             </div>
 
             <!--Añadir Usuario-->
-            <div id="formAñadirUsuario" class="col-md-5 grid-margin stretch-card" hidden>
+            <div id="formAñadirUsuario" class="col-md-4 grid-margin stretch-card formHidden" hidden>
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Añadir Deportista</h4>
@@ -119,61 +90,65 @@
                             </select>
                         </div>
 
-                        <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-success"
-                            data-bs-toggle="modal" href="#modalActualizar">Añadir</button>
+                        <button id="botonInsertarUsuario" type="button" class="btn btn-sm btn-success"
+                            data-bs-toggle="modal" href="#modalInsertarUsuario">Añadir</button>
                     </div>
                 </div>
             </div>
 
-
             <!--Añadir Prueba-->
-            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card">
+            <div id="formAñadirPrueba" class="col-md-4 grid-margin stretch-card formHidden" hidden>
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Añadir Prueba</h4>
                         <div class="form-group">
                             <label for="exampleFormControlSelect2">Selecciona la prueba a añadir:</label>
                             <select class="form-control" id="selectPrueba">
-                                
+
                             </select>
                         </div>
-
-                        <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-success"
-                            data-bs-toggle="modal" href="#modalActualizar">Añadir</button>
+                        <!--MODAL INSERTAR PRUEBA-->
+                        <button id="botonInsertPrueba" type="button" class="btn btn-sm btn-success"
+                            data-bs-toggle="modal" href="#modalInsertarPrueba">Añadir</button>
                     </div>
                 </div>
             </div>
 
             <!--Añadir Marca-->
-            <div id="formAñadirPrueuba" class="col-md-5 grid-margin stretch-card" hidden>
+            <div id="formAñadirMarca" class="col-md-4 grid-margin stretch-card formHidden" hidden>
                 <div class="card">
                     <div class="card-body">
-                        <h4>Añadir Marca:</h4>
+                        <h4 class="card-title">Añadir Marca:</h4>
                         <div class="form-group">
-                            
-                            <input id="nombreNuevoUsuario" type="text" class="form-control form-control-sm"
+                            <label>Marca manual:</label>
+                            <input id="marcaManual" type="text" class="form-control form-control-sm"
                                 placeholder="Escribe la marca manualmente:">
+                            <button id="botonInsertMarcaManual" type="button" class="btn btn-sm btn-success mt-4"
+                                data-bs-toggle="modal" href="#modalInsertarMarca">Añadir
+                            </button>
                         </div>
                         <hr>
-                        <h4>Cronómetro:</h4>
+                        <!--MODAL INSERTAR MARCA-->
+
+                        <label>Cronómetro:</label>
                         <div class="form-group">
-                            <p>00:00:00</p>
+                            <p id="text_cronometro">00:00:00</p>
                             <div class="btn-group me-2" role="group" aria-label="Second group">
-                                <button type="button" class="btn btn-light btn-sm">
+                                <button id="start_crono" type="button" class="btn btn-light btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-play-fill" viewBox="0 0 16 16">
                                         <path
                                             d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                                     </svg>
                                 </button>
-                                <button type="button" class="btn btn-light btn-sm">
+                                <button id="stop_crono" type="button" class="btn btn-light btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-pause-fill" viewBox="0 0 16 16">
                                         <path
                                             d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
                                     </svg>
                                 </button>
-                                <button type="button" class="btn btn-light btn-sm">
+                                <button disabled id="restart_crono" type="button" class="btn btn-light btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -185,9 +160,9 @@
                             </div>
 
                         </div>
-
-                        <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-success"
-                            data-bs-toggle="modal" href="#modalActualizar">Añadir
+                        <!--MODAL INSERTAR MARCA-->
+                        <button id="botonInsertMarcaCrono" type="button" class="btn btn-sm btn-success"
+                            data-bs-toggle="modal" href="#modalInsertarMarca">Añadir
                         </button>
                     </div>
                 </div>
@@ -196,93 +171,26 @@
 
 
         <!--MOSTRAR USUARIO-->
-        <div class="row pt-4">
-            <div class="col">
+        <div class="row" id="tarjetaUser" hidden>
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-wrap justify-content-between">
-                            <h4 class="card-title mb-3"><a class="text-decoration-none" data-bs-toggle="collapse"
-                                    href="#marcasKayak" role="button" aria-expanded="false"
-                                    aria-controls="marcasKayak">Martín Barreiro</a></h4>
+                            <h4 class="card-title mb-3"><a id="tituloTarjeta" class="text-decoration-none"
+                                    data-bs-toggle="collapse" href="#marcasKayak" role="button" aria-expanded="false"
+                                    aria-controls="marcasKayak"></a></h4>
                         </div>
 
                         <div class="table-responsive collapse" id="marcasKayak">
                             <div class="pb-3">
-                                <button id="botonNuevoUsuario" type="button" class="btn btn-sm btn-secondary"
-                                    data-bs-toggle="modal" href="#modalActualizar">Añadir Prueba</button>
+                                <button id="botonAñadirPrueba" type="button" class="btn btn-sm btn-secondary">Añadir
+                                    Prueba</button>
                             </div>
 
 
                             <table class="table">
 
-                                <tbody>
-
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <div class="font-weight-bold mt-1">1</div>
-                                            </div>
-
-                                        </td>
-                                        <td>
-                                            <div>Prueba:
-                                            </div>
-                                            <div class="font-weight-bold  mt-1">1000m</div>
-                                        </td>
-
-
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-
-
-                                        <!--MARCAS-->
-                                        <td>
-                                            <table class="table">
-                                                <h4 class="pb-2">Marcas:</h4>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div>Fecha:</div>
-                                                            <div class="font-weight-bold  mt-1">25/05/2022 - 16:43</div>
-                                                        </td>
-                                                        <td>
-                                                            <div>Marca:</div>
-                                                            <div class="font-weight-bold  mt-1">5:22</div>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button"
-                                                                class="btn btn-sm btn-danger">Eliminar</button>
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <div>Fecha:</div>
-                                                            <div class="font-weight-bold  mt-1">25/05/2022 - 17:03</div>
-                                                        </td>
-                                                        <td>
-                                                            <div>Marca:</div>
-                                                            <div class="font-weight-bold  mt-1">5:16</div>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button"
-                                                                class="btn btn-sm btn-danger">Eliminar</button>
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-
-
+                                <tbody id="listaPruebas">
 
                                 </tbody>
                             </table>
@@ -296,7 +204,8 @@
     </div>
 
 
-    <div class="modal fade" id="modalActualizar" aria-hidden="true" aria-labelledby="modalActualizar" tabindex="-1">
+    <div class="modal fade botonF5" id="modalInsertarUsuario" aria-hidden="true" aria-labelledby="modalActualizar"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -305,6 +214,42 @@
                 </div>
                 <div class="modal-body p-4">
                     Usuario añadido con éxito a la base de datos.
+                </div>
+                <div class="modal-footer">
+                    <button id="botonActualizar" class="btn btn-secondary btn-sm">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade botonF5" id="modalInsertarPrueba" aria-hidden="true" aria-labelledby="modalActualizar"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="font-weight-bold">Proyecto Entrenador</h3>
+                        <p>Martín Barreiro 1º DAW</p>
+                </div>
+                <div class="modal-body p-4">
+                    Prueba añadida con éxito a la base de datos.
+                </div>
+                <div class="modal-footer">
+                    <button id="botonActualizar" class="btn btn-secondary btn-sm">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade botonF5" id="modalInsertarMarca" aria-hidden="true" aria-labelledby="modalActualizar"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="font-weight-bold">Proyecto Entrenador</h3>
+                        <p>Martín Barreiro 1º DAW</p>
+                </div>
+                <div class="modal-body p-4">
+                    Marca añadida con éxito a la base de datos.
                 </div>
                 <div class="modal-footer">
                     <button id="botonActualizar" class="btn btn-secondary btn-sm">Aceptar</button>
