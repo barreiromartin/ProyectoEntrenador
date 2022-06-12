@@ -177,7 +177,10 @@ function tablaPruebas(idUser) {
                     btnEliminar.classList.add("btn");
                     btnEliminar.classList.add("btn-sm");
                     btnEliminar.classList.add("btn-danger");
-                    btnEliminar.classList.add("botonEliminarPrueba");
+                    btnEliminar.classList.add("botonDeletePrueba");
+                    btnEliminar.setAttribute("type", "button");
+                    btnEliminar.setAttribute("data-bs-toggle", "modal");
+                    btnEliminar.setAttribute("href", "#modalDeletePrueba");
                     btnEliminar.value = respuesta[i].prueba_user;
                     tdEliminar.appendChild(btnEliminar);
                     tr.appendChild(tdEliminar);
@@ -201,11 +204,17 @@ function tablaPruebas(idUser) {
                     tr.appendChild(tdMarcas)
 
                     //Añadir el tr a la tabla
-                    document.getElementById("listaPruebas").appendChild(tr);
+                    tbody = document.createElement("tbody");
+                    tbody.setAttribute("id", "listaPruebas");
+                    document.getElementById("tablePruebas").appendChild(tbody);
 
+                    document.getElementById("listaPruebas").appendChild(tr);
+                    
+
+                    
                     tablaMarcas(respuesta[i].idUser, respuesta[i].idPrueba);
                     botonFormMarcas();
-
+                    botonEliminarPrueba();
                 }
             }
         }
@@ -257,7 +266,10 @@ function tablaMarcas(idUser, idPrueba) {
                     btnEliminar.classList.add("btn");
                     btnEliminar.classList.add("btn-sm");
                     btnEliminar.classList.add("btn-danger");
-                    btnEliminar.classList.add("botonEliminarMarca");
+                    btnEliminar.classList.add("botonDeleteMarca");
+                    btnEliminar.setAttribute("type", "button");
+                    btnEliminar.setAttribute("data-bs-toggle", "modal");
+                    btnEliminar.setAttribute("href", "#modalDeleteMarca");
                     btnEliminar.value = marcaPrueba[i].idMarca;
                     tdEliminar.appendChild(btnEliminar);
                     tr.appendChild(tdEliminar);
@@ -265,6 +277,8 @@ function tablaMarcas(idUser, idPrueba) {
 
                     document.getElementById(nombreTabla).appendChild(tr);
 
+
+                    botonEliminarMarca();
                 }
             }
         }
@@ -288,22 +302,52 @@ function botonEliminarUsuarios() {
 
                     document.getElementById("strongUsuarioEliminar").innerHTML = deportista.nombreUser;
                     eliminarUsuario = document.getElementById("deleteUser");
-                    eliminarUsuario.addEventListener("click", ()=>{
-                        deleteUser(idUser);
+                    eliminarUsuario.addEventListener("click", () => {
+                        deleteFrom(idUser, "deportistas");
                         location.reload(true);
                     })
-
                 }
             })
-
         })
     }
 }
 
-function deleteUser(idUser){
+function botonEliminarPrueba() {
+    boton = document.getElementsByClassName("botonDeletePrueba");
+
+    for (i = 0; i < boton.length; i++) {
+        boton[i].addEventListener("click", (evt) => {
+            eliminarPrueba = document.getElementById("deletePrueba");
+            prueba_user = evt.currentTarget.value;
+
+            eliminarPrueba.addEventListener("click", () => {
+                deleteFrom(prueba_user, "prueba_deportista");
+                location.reload(true);
+            })
+        })
+    }
+}
+
+function botonEliminarMarca() {
+    boton = document.getElementsByClassName("botonDeleteMarca");
+
+    for (i = 0; i < boton.length; i++) {
+        boton[i].addEventListener("click", (evt) => {
+            eliminarMarca = document.getElementById("deleteMarca");
+            idMarca = evt.currentTarget.value;
+
+            eliminarMarca.addEventListener("click", () => {
+                deleteFrom(idMarca, "marcas");
+                location.reload(true);
+            })
+        })
+    }
+}
+
+function deleteFrom(id, tabla) {
     $.ajax({
-        data: { "idUser": idUser},
-        url: 'deleteUser.php',
+        data: { "id": id, "tabla": tabla },
+        url: 'deleteFrom.php',
         type: 'get',
     })
 }
@@ -327,6 +371,11 @@ function botonDetalles() {
     for (i = 0; i < botones.length; i++) {
         botones[i].addEventListener("click", (evt) => {
             tarjetaUser.hidden = false;
+
+            tarjetaCreada = document.getElementById("listaPruebas");
+            if(tarjetaCreada){
+                tarjetaCreada.remove();
+            }
             tarjetaDeportista(evt.currentTarget.value);
 
         })
