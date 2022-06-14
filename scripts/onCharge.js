@@ -82,7 +82,7 @@ function deleteFrom(id, tabla) {
 
     $.ajax({
         data: { "id": id, "tabla": tabla },
-        url: 'php/deleteFrom.php',
+        url: 'deleteFrom.php',
         type: 'get',
     })
 }
@@ -135,7 +135,7 @@ function insertDeportista() {
 
         $.ajax({
             data: { "nombre": nombre, "categoria": categoria, "seccion": seccion },
-            url: 'php/insertUser.php',
+            url: 'insertUser.php',
             type: 'get',
         })
     })
@@ -155,7 +155,7 @@ function insertPrueba() {
 
         $.ajax({
             data: { "idPrueba": idPrueba, "idUser": idUser },
-            url: 'php/insertPrueba.php',
+            url: 'insertPrueba.php',
             type: 'get',
         })
     })
@@ -173,7 +173,7 @@ function insertMarca() {
         fecha = fechaActual();
         $.ajax({
             data: { "prueba_user": evt.currentTarget.value, "marca": marcaManual, "fecha": fecha },
-            url: 'php/insertMarca.php',
+            url: 'insertMarca.php',
             type: 'get',
         })
     })
@@ -186,7 +186,7 @@ function insertMarca() {
         fecha = fechaActual();
         $.ajax({
             data: { "prueba_user": evt.currentTarget.value, "marca": marcaCrono, "fecha": fecha },
-            url: 'php/insertMarca.php',
+            url: 'insertMarca.php',
             type: 'get',
         })
     })
@@ -196,7 +196,7 @@ function insertMarca() {
 function seleccionPruebas() {
     $.ajax({
         data: { "nombre_tabla": "pruebas" },
-        url: 'php/selectAllPruebas.php',
+        url: 'selectAllPruebas.php',
         type: 'get',
         success: function (response) {
             if (response != false) {
