@@ -1,5 +1,7 @@
-/* CRONOMETRO */
+// cronometro: Funcionalidades de un cronómetro básico con Start, Stop y Reset para añadir marcas cronometradas desde la app.
+// Crea 3 eventos sobre los botones con la funcion tiempo() gestionamos el intervalo del reloj, para evitar errores estos se desactivan y activan entre si, para recoger el valor del cronometro se recoge el valor del div con id text_cronometro.
 function botonCronometro() {
+
     hCron = 0;
     mCron = 0;
     sCron = 0;
@@ -30,7 +32,9 @@ function botonCronometro() {
     })
 }
 
+// tiempo: Gestiona un intervalo que va actualizando el elemento con el id text_cronometro.
 function tiempo() {
+    //sCron para
     sCron++
     if (sCron > 59) {
         mCron++;
@@ -61,12 +65,13 @@ function tiempo() {
     document.getElementById("text_cronometro").innerHTML = hAuxCron + ":" + mAuxCron + ":" + sAuxCron;
 }
 
+// cronometro: Inicializa el cronómetro a 0.
 function cronometro() {
     botonCronometro();
     document.getElementById("text_cronometro").innerHTML = "00:00:00";
 }
 
-/* FECHA ACTUAL */
+// fechaActual: Devuelve como string la fecha actual con el formato  dd/mm/aaaa - hh:mm:ss.
 function fechaActual() {
     let date = new Date();
     let output = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear() + ' - ' + date.toLocaleTimeString();
@@ -74,7 +79,7 @@ function fechaActual() {
 }
 
 
-/* Funciones Básicas que no dependen de nada del programa. */
+/* Funciones Básicas de la aplicación. */
 
 // deleteFrom: elimina una row de la tabla indicada.
 //Recibe el nombre de una tabla junto con su primary key, en el archivo delteFrom.php dependiendo de la tabla que sea ajusta el id al nombre de la columna. 
@@ -82,7 +87,7 @@ function deleteFrom(id, tabla) {
 
     $.ajax({
         data: { "id": id, "tabla": tabla },
-        url: 'deleteFrom.php',
+        url: 'php/deleteFrom.php',
         type: 'get',
     })
 }
@@ -135,7 +140,7 @@ function insertDeportista() {
 
         $.ajax({
             data: { "nombre": nombre, "categoria": categoria, "seccion": seccion },
-            url: 'insertUser.php',
+            url: 'php/insertUser.php',
             type: 'get',
         })
     })
@@ -155,7 +160,7 @@ function insertPrueba() {
 
         $.ajax({
             data: { "idPrueba": idPrueba, "idUser": idUser },
-            url: 'insertPrueba.php',
+            url: 'php/insertPrueba.php',
             type: 'get',
         })
     })
@@ -164,43 +169,42 @@ function insertPrueba() {
 // Marca: Evento para insertar marca.
 // Recoge las variables del formulario e inserta la marca sobre la prueba indicada, dependiendo de si se escribe de forma manual o con funcionalidad del cronómetro.
 function insertMarca() {
+    // Este evento para añadir las marcas de manera manual
     botonManual = document.getElementById("botonInsertMarcaManual");
-
-
     botonManual.addEventListener("click", (evt) => {
-        //Usuario
         marcaManual = document.getElementById("marcaManual").value;
         fecha = fechaActual();
         $.ajax({
             data: { "prueba_user": evt.currentTarget.value, "marca": marcaManual, "fecha": fecha },
-            url: 'insertMarca.php',
+            url: 'php/insertMarca.php',
             type: 'get',
         })
     })
 
+    // Este evento para añadir las marcas utilizando el cronómetro
     botonCrono = document.getElementById("botonInsertMarcaCrono");
-
     botonCrono.addEventListener("click", (evt) => {
-        //Usuario
         marcaCrono = document.getElementById("text_cronometro").innerHTML;
         fecha = fechaActual();
         $.ajax({
             data: { "prueba_user": evt.currentTarget.value, "marca": marcaCrono, "fecha": fecha },
-            url: 'insertMarca.php',
+            url: 'php/insertMarca.php',
             type: 'get',
         })
     })
 }
 
-
+// seleccionPruebas: Recoge todas las pruebas y las carga en el formulario.
+// Utilizando ajax recoge todas las filas de la DB.
 function seleccionPruebas() {
     $.ajax({
         data: { "nombre_tabla": "pruebas" },
-        url: 'selectAllPruebas.php',
+        url: 'php/selectAllPruebas.php',
         type: 'get',
         success: function (response) {
             if (response != false) {
                 var respuesta = JSON.parse(response);
+                // Recoge un array y lo almacena en la variable respuesta por cada entrada de este añadae un elemento option dentro de un select.
                 for (i = 0; i < respuesta.length; i++) {
                     opcion = document.createElement("option");
                     opcion.innerHTML = respuesta[i].nombrePrueba;
@@ -213,23 +217,72 @@ function seleccionPruebas() {
 }
 
 
+// botonDetalles: Crea el evento que genera la tarjeta para cada usuario.
+function botonDetalles() {
+    var botones = document.getElementsByClassName("botonDetalles");
+    tarjetaUser = document.getElementById("tarjetaUser");
+
+    for (i = 0; i < botones.length; i++) {
+        botones[i].addEventListener("click", (evt) => {
+            tarjetaUser.hidden = false;
+            tarjetaDeportista(evt.currentTarget.value);
+
+        })
+    }
+}
+function tarjetaDeportista(idUser) {
+    document.getElementById("botonAñadirPrueba").value = idUser;
+
+    $.ajax({
+        async: false,
+        data: { "idUser": idUser },
+        url: 'php/selectDeportista.php',
+        type: 'get',
+        success: function (user) {
+            deportista = JSON.parse(user);
+            //Carga el titulo de la tarjeta con el nombre del usuario seleccionado.
+            document.getElementById("tituloTarjeta").innerHTML = deportista.nombreUser;
+
+            //Comprueba si está creado el elemento tablaUsuario que almacena las pruebas.
+            var tablaUsuario;
+            tablaUsuario = document.getElementById("tablaUsuario");
+            if (tablaUsuario) {
+                //SI está creado lo borra y lo crea de nuevo para que esté limpio
+                tablaUsuario.remove();
+                tbody = document.createElement("tbody");
+                tbody.setAttribute("id", "tablaUsuario");
+                tabla = document.getElementById("listaPruebas");
+                tabla.appendChild(tbody);
+                tablaPruebas(deportista.idUser);
+                return
+            }
+            tbody = document.createElement("tbody");
+            tbody.setAttribute("id", "tablaUsuario");
+            tabla = document.getElementById("listaPruebas");
+            tabla.appendChild(tbody);
+            tablaPruebas(deportista.idUser);
+
+            
+
+        }
+    })
+}
 
 
 
 
 function onCharge() {
-    // FUNCIONALIDADES.
+    // Función básica del programa para administrar el cronómetro de marcas por eventos.
     cronometro();
 
-    // MUESTRA DE DATOS
+    // Muestra las pruebas disponibles.
     seleccionPruebas();
-
-    // FUNCIONES VISUALES
+    // Evento para actualizar la página al pulsar aceptar en los modal.
     botonActualizar();
+    // Cargar los formularios con los datos precisos.
     botonesForms();
-    
 
-    //inserts
+    // Eventos para insertar filas en la DB.
     insertDeportista();
     insertPrueba();
     insertMarca();

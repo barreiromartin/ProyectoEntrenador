@@ -16,15 +16,6 @@
     <script src="https://kit.fontawesome.com/25649eac4e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-    <!-- <script src="funciones/cronometro.js"></script>
-    <script src="funciones/fecha.js"></script> -->
-=======
-    <script src="inc/clases.js"></script>
-    <script src="funciones/cronometro.js"></script>
-    <script src="funciones/fecha.js"></script>
->>>>>>> ea695a09afbd95bbd8a5e089e3821074c4fdc3e7
-
 </head>
 
 <body>
@@ -48,7 +39,7 @@
         <!--TABLA DEPORTISTAS + AÑADIR USUARIOS-->
         <div class="row pb-4">
             <!--Tabala Listado-->
-            <div class="col-8">
+            <div class="col pb-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-wrap justify-content-between">
@@ -193,11 +184,8 @@
                             </div>
 
 
-                            <table class="table">
-
-                                <tbody id="listaPruebas">
-
-                                </tbody>
+                            <table class="table" id="listaPruebas">
+                                
                             </table>
                         </div>
                     </div>
@@ -209,11 +197,7 @@
     </div>
 
 
-<<<<<<< HEAD
     <div class="modal fade " id="modalInsertarUsuario" aria-hidden="true" aria-labelledby="modalActualizar"
-=======
-    <div class="modal fade botonF5" id="modalInsertarUsuario" aria-hidden="true" aria-labelledby="modalActualizar"
->>>>>>> ea695a09afbd95bbd8a5e089e3821074c4fdc3e7
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -231,11 +215,7 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <div class="modal fade " id="modalInsertarPrueba" aria-hidden="true" aria-labelledby="modalActualizar"
-=======
-    <div class="modal fade botonF5" id="modalInsertarPrueba" aria-hidden="true" aria-labelledby="modalActualizar"
->>>>>>> ea695a09afbd95bbd8a5e089e3821074c4fdc3e7
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -247,37 +227,11 @@
                     Prueba añadida con éxito a la base de datos.
                 </div>
                 <div class="modal-footer">
-<<<<<<< HEAD
                     <button id="botonActualizar" class="btn btn-secondary btn-sm botonF5">Aceptar</button>
-=======
-                    <button id="botonActualizar" class="btn btn-secondary btn-sm">Aceptar</button>
->>>>>>> ea695a09afbd95bbd8a5e089e3821074c4fdc3e7
                 </div>
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-=======
-
-    <div class="modal fade botonF5" id="modalInsertarMarca" aria-hidden="true" aria-labelledby="modalActualizar"
-        tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="font-weight-bold">Proyecto Entrenador</h3>
-                        <p>Martín Barreiro 1º DAW</p>
-                </div>
-                <div class="modal-body p-4">
-                    Marca añadida con éxito a la base de datos.
-                </div>
-                <div class="modal-footer">
-                    <button id="botonActualizar" class="btn btn-secondary btn-sm">Aceptar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
->>>>>>> ea695a09afbd95bbd8a5e089e3821074c4fdc3e7
 
     <div class="modal fade " id="modalInsertarMarca" aria-hidden="true" aria-labelledby="modalActualizar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -308,14 +262,13 @@
                 </div>
                 <div class="modal-footer">
                     <button id="deleteUser" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button id="botonActualizar" class="btn btn-success btn-sm"
-                        data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success btn-sm" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    
+
 
     <div class="modal fade" id="modalDeletePrueba" aria-hidden="true" aria-labelledby="modalActualizar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -329,12 +282,11 @@
                 </div>
                 <div class="modal-footer">
                     <button id="deletePrueba" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button class="btn btn-success btn-sm"
-                        data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success btn-sm" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <div class="modal fade" id="modalDeleteMarca" aria-hidden="true" aria-labelledby="modalActualizar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -348,8 +300,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="deleteMarca" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button class="btn btn-success btn-sm"
-                        data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success btn-sm" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>

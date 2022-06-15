@@ -1,3 +1,5 @@
+// tablaDeportistas: Genera la tabla de deportistas.
+// Recoge todas las filas de la tabla deportistas en la DB y añade eventos sobre el boton detalles y el botón eliminar.
 function tablaDeportistas() {
     $.ajax({
         async: false,
@@ -6,6 +8,7 @@ function tablaDeportistas() {
         type: 'get',
         success: function (response) {
             if (response != false) {
+                // La variable respuesta almacena un array con las filas recogidas de la DB.
                 var respuesta = JSON.parse(response);
                 for (i = 0; i < respuesta.length; i++) {
 
@@ -103,12 +106,15 @@ function tablaDeportistas() {
                     //Añadir el tr a la tabla
                     document.getElementById("listaDeportistas").appendChild(tr);
                 }
+                botonEliminarUsuarios();
+                botonDetalles();
             }
         }
     })
 }
 
-
+// tablaPruebas: Genera una tabla con las pruebas del usuario.
+// Recoge las pruebas del usuario junto al nombre de estas y las muestra en una tabla donde podremos añadir marcas o eliminarlas mediante los eventos establecidos en los botones.
 function tablaPruebas(idUser) {
     $.ajax({
         async: false,
@@ -117,6 +123,7 @@ function tablaPruebas(idUser) {
         type: 'get',
         success: function (response) {
             if (response != false) {
+                // La variable respuesta almacena un array con las filas recogidas de la DB.
                 var respuesta = JSON.parse(response);
                 for (var i = 0; i < respuesta.length; i++) {
                     tr = document.createElement("tr");
@@ -184,7 +191,7 @@ function tablaPruebas(idUser) {
                     tr.appendChild(tdMarcas)
 
                     //Añadir el tr a la tabla
-                    document.getElementById("listaPruebas").appendChild(tr);
+                    document.getElementById("tablaUsuario").appendChild(tr);
 
                     tablaMarcas(respuesta[i].prueba_user);
 
@@ -197,6 +204,8 @@ function tablaPruebas(idUser) {
     })
 }
 
+// tablaMarcas: Recoge las marcas de la prueba y las muestra en una tabla.
+// Recoge las fecha de registro y la marca en la prueba y las muestra en una tabla donde podremos eliminarlas mediante el boton eliminar.
 function tablaMarcas(prueba_user) {
     $.ajax({
         async: false,
@@ -205,6 +214,7 @@ function tablaMarcas(prueba_user) {
         type: 'get',
         success: function (marcas) {
             if (marcas != false) {
+                // La variable marcaPrueba almacena un array con las filas recogidas de la DB.
                 var marcaPrueba = JSON.parse(marcas);
                 for (i = 0; i < marcaPrueba.length; i++) {
                     tr = document.createElement("tr");
@@ -255,22 +265,25 @@ function tablaMarcas(prueba_user) {
     })
 }
 
+// botonDeleteUsuario: Elimina el usuario seleccionado.
 function botonEliminarUsuarios() {
+    //Primero genera un evento para los botones eliminar de la tabla, este carga el nombre del usuario en el modal para confirmar.
     boton = document.getElementsByClassName("botonDeleteUsuario");
-
     for (i = 0; i < boton.length; i++) {
 
+        //Recoge la id del usuario almacenada como value en los botones.
         boton[i].addEventListener("click", (evt) => {
             idUser = evt.currentTarget.value;
             $.ajax({
                 async: false,
-                data: { "idUser": evt.currentTarget.value },
+                data: { "idUser": idUser },
                 url: 'php/selectDeportista.php',
                 type: 'get',
                 success: function (user) {
                     deportista = JSON.parse(user);
-
                     document.getElementById("strongUsuarioEliminar").innerHTML = deportista.nombreUser;
+
+                    // Segundo evento sobre el boton para confirmar la eliminación del usuario.
                     eliminarUsuario = document.getElementById("deleteUser");
                     eliminarUsuario.addEventListener("click", () => {
                         deleteFrom(idUser, "deportistas");
@@ -282,15 +295,15 @@ function botonEliminarUsuarios() {
     }
 }
 
+// botonEliminarPrueba: Elimina la prueba seleccionada.
 function botonEliminarPrueba() {
     boton = document.getElementsByClassName("botonDeletePrueba");
-    console.log("casa")
     for (i = 0; i < boton.length; i++) {
+        //Recoge la id de la prueba almacenada como value en los botones.
         boton[i].addEventListener("click", (evt) => {
             eliminarPrueba = document.getElementById("deletePrueba");
             prueba_user = evt.currentTarget.value;
 
-            console.log(eliminarPrueba);
             eliminarPrueba.addEventListener("click", () => {
                 deleteFrom(prueba_user, "prueba_deportista");
                 location.reload(true);
@@ -299,10 +312,12 @@ function botonEliminarPrueba() {
     }
 }
 
+// botonEliminarMarca: Elimina la marca seleccionada.
 function botonEliminarMarca() {
     boton = document.getElementsByClassName("botonDeleteMarca");
 
     for (i = 0; i < boton.length; i++) {
+        //Recoge la id de la marca almacenada como value en los botones.
         boton[i].addEventListener("click", (evt) => {
             eliminarMarca = document.getElementById("deleteMarca");
             idMarca = evt.currentTarget.value;
@@ -315,6 +330,8 @@ function botonEliminarMarca() {
     }
 }
 
+// botonFormMarcas: Carga el formulario de marcas.
+// Este al depender de los valores de la prueba se activa una vez haya marcas registradas almacenando en los botones de añadir el value de la prueba.
 function botonFormMarcas() {
     forms = document.getElementsByClassName("formHidden");
 
@@ -322,6 +339,7 @@ function botonFormMarcas() {
     for (i = 0; i < botonAñadirMarca.length; i++) {
         botonAñadirMarca[i].addEventListener("click", (event) => {
 
+            //Inserta como value el id de la prueba.
             prueba_user = event.currentTarget.value;
             document.getElementById("botonInsertMarcaManual").value = prueba_user;
             document.getElementById("botonInsertMarcaCrono").value = prueba_user;
@@ -333,8 +351,4 @@ function botonFormMarcas() {
             document.getElementById("formAñadirMarca").hidden = false;
         })
     }
-}
-
-function tablas() {
-    tablaDeportistas();
 }
